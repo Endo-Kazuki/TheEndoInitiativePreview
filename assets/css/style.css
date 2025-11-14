@@ -5,7 +5,7 @@ body {
 }
 
 .404-red-text {
-  color: b91c1c
+  color: b91c1c !important;
 }
 
 /* Primary button */
