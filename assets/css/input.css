@@ -1,9 +1,10 @@
-/* Tailwind base, components, utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Your custom styles */
-body {
-    font-family: 'Inter', sans-serif;
+/* Safelist your custom classes so Tailwind doesn't purge them */
+@layer utilities {
+  .text-[3em] {}
+  .text-[#b91c1c] {}
+  .hover\:translate-y-\[-2px\] {}
 }
