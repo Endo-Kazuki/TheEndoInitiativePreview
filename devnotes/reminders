@@ -1,1 +1,14 @@
+color specific text:
+structure like this inside of the style, exmaple from 404.html
+color: #b91c1c !important;
+<h4 style="font-size: 3em; margin-bottom: 0.5em; color: #b91c1c !important;">You Aren’t Supposed to Be Here.</h4>
 
+
+
+add bullet points to <ul> in tailwind
+you need to add this class
+example: <ul class="list-disc list-inside space-y-2">
+list-disc → shows bullets
+list-decimal → shows numbers
+list-inside → bullets inside padding
+space-y-2 → vertical spacing between items
