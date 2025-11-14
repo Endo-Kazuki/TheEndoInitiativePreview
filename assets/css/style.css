@@ -4,6 +4,10 @@ body {
   font-family: system-ui, sans-serif;
 }
 
+.404-red-text {
+  color: b91c1c
+}
+
 /* Primary button */
 .btn-primary {
   display: inline-block;
