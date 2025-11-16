@@ -1,4 +1,10 @@
-<link rel="icon" sizes="32x32" href="{{ site.url }}/assets/logo/{{ site.favicon-32x32 }}">
-<link rel="apple-touch-icon" sizes="180x180" href="{{ site.url }}/assets/logo/{{ site.apple-touch-icon-180x180-precomposed }}">
-<meta name="msapplication-TileImage" content="{{ site.url }}/assets/logo/{{ site.msapplication_tileimage }}">
-<meta name="msapplication-TileColor" content="{{ site.msapplication_tilecolor }}">
+{% comment %}
+* Simple favicon setup for custom domain
+* Sizes included: your current ones only
+{% endcomment %}
+
+{% if site.favicon %}<link rel="icon" href="{{ site.url }}/assets/logo/{{ site.favicon }}" sizes="any">{% endif %}
+{% if site.favicon-32 %}<link rel="icon" type="image/png" href="{{ site.url }}/assets/logo/{{ site.favicon-32 }}" sizes="32x32">{% endif %}
+{% if site.apple-touch-icon %}<link rel="apple-touch-icon" href="{{ site.url }}/assets/logo/{{ site.apple-touch-icon }}">{% endif %}
+{% if site.android-192 %}<link rel="icon" type="image/png" href="{{ site.url }}/assets/logo/{{ site.android-192 }}" sizes="192x192">{% endif %}
+{% if site.android-512 %}<link rel="icon" type="image/png" href="{{ site.url }}/assets/logo/{{ site.android-512 }}" sizes="512x512">{% endif %}
