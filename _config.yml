@@ -5,7 +5,8 @@ baseurl: ""  # always empty for custom domains unless you publish to a subfolder
 markdown: kramdown
 theme: null
 
-favicon-32x32: "favicon-32.png"
-apple-touch-icon-180x180-precomposed: "apple-touch-icon.png"
-msapplication_tileimage: "mstile-150x150.png"
-msapplication_tilecolor: "#ffffff"
+favicon: "favicon.ico"
+favicon-32: "favicon-32.png"
+apple-touch-icon: "apple-touch-icon.png"
+android-192: "android-chrome-192.png"
+android-512: "android-chrome-512.png"
