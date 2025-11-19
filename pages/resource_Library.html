@@ -3,43 +3,101 @@ layout: default
 title: Library
 permalink: /library
 ---
-<div class="max-w-2xl mx-auto p-4">
-  <input id="searchInput"
-         type="text"
-         placeholder="Search posts..."
-         class="w-full p-2 border rounded">
+<div class="max-w-3xl mx-auto p-4">
+  <input
+    id="search-box"
+    type="text"
+    placeholder="Search posts..."
+    class="w-full p-2 border rounded mb-4"
+  />
 
-  <div id="results" class="mt-4 space-y-4"></div>
+  <div id="search-results" class="space-y-6"></div>
+
+  <button
+    id="load-more"
+    class="mt-4 px-4 py-2 border rounded hover:bg-gray-100 hidden"
+  >
+    Show More
+  </button>
 </div>
 
 <script>
   let posts = [];
+  let visibleCount = 0;
+  const batchSize = 10;
+
+  const resultsEl = document.getElementById("search-results");
+  const searchBox = document.getElementById("search-box");
+  const loadMoreBtn = document.getElementById("load-more");
 
   async function loadPosts() {
-    const res = await fetch('/search.json');
+    const res = await fetch("/search.json");
     posts = await res.json();
+    renderInitial();
   }
 
-  function search(query) {
-    query = query.toLowerCase();
-    return posts.filter(p =>
-      p.title.toLowerCase().includes(query) ||
-      p.content.toLowerCase().includes(query)
+  function createPostCard(post) {
+    return `
+      <article class="p-3 border rounded">
+        <h2 class="text-xl font-semibold">
+          <a href="${post.url}" class="text-blue-600 hover:underline">
+            ${post.title}
+          </a>
+        </h2>
+        <p class="text-gray-600 text-sm mt-1">${post.excerpt}</p>
+        <a href="${post.url}" class="text-sm text-blue-500 hover:underline mt-2 inline-block">
+          Read more →
+        </a>
+      </article>
+    `;
+  }
+
+  function renderInitial() {
+    resultsEl.innerHTML = "";
+    visibleCount = 0;
+    loadMoreBtn.classList.remove("hidden");
+
+    showNextBatch();
+  }
+
+  function showNextBatch() {
+    const nextBatch = posts.slice(visibleCount, visibleCount + batchSize);
+    nextBatch.forEach(p => {
+      resultsEl.insertAdjacentHTML("beforeend", createPostCard(p));
+    });
+
+    visibleCount += batchSize;
+
+    if (visibleCount >= posts.length) {
+      loadMoreBtn.classList.add("hidden");
+    }
+  }
+
+  function searchPosts(term) {
+    term = term.toLowerCase().trim();
+
+    if (!term) {
+      renderInitial();
+      return;
+    }
+
+    const filtered = posts.filter(p =>
+      p.title.toLowerCase().includes(term) ||
+      p.content.toLowerCase().includes(term)
     );
+
+    resultsEl.innerHTML = filtered
+      .map(p => createPostCard(p))
+      .join("");
+
+    loadMoreBtn.classList.add("hidden");
   }
 
-  document.getElementById('searchInput').addEventListener('input', e => {
-    const q = e.target.value.trim();
-    const results = search(q);
-
-    const container = document.getElementById('results');
-    container.innerHTML = results.map(r => `
-      <a href="${r.url}" class="block p-3 border rounded hover:bg-gray-100">
-        <h3 class="font-bold">${r.title}</h3>
-        <p class="text-sm opacity-70">${r.content.substring(0, 120)}...</p>
-      </a>
-    `).join('');
+  searchBox.addEventListener("input", () => {
+    searchPosts(searchBox.value);
   });
+
+  loadMoreBtn.addEventListener("click", showNextBatch);
 
   loadPosts();
 </script>
