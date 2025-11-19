@@ -17,7 +17,7 @@ permalink: /library
 
 <script>
 (async function () {
-  const JSON_PATH = {{ "\"/search.json\" | relative_url" }};
+  const JSON_PATH = "{{ "\"/search.json\" | relative_url" }}";
   const debugEl = document.getElementById('debug');
   function dbg(...args){ console.log(...args); debugEl.textContent = args.join(' | '); }
 
